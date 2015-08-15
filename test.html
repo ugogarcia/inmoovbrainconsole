@@ -1,0 +1,24 @@
+<html>
+<script language=javascript>
+function start()
+{
+    alert("vamos a ello");
+var recognizer = new webkitSpeechRecognition();
+recognizer.lang = "es";
+recognizer.onresult = function(event) {
+    if (event.results.length > 0) {
+        var result = event.results[event.results.length-1];
+        if(result.isFinal) {
+            console.log(result[0].transcript);
+        }
+    }  
+};
+recognizer.start();
+}
+</script>
+<body>
+    Prueba Reconocimiento Voz<br><br>
+    <input value="GO!" type=button onClick="start()">
+
+</body>
+</html>
