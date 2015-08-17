@@ -26,7 +26,11 @@ InMoovBrain Server URL: <input type="text" id="cfg_inmoovbrain_server" value="ht
 <td>
 <table border=0 width=100%>
     <tr>
-        <td colspan=3>Consola</td>
+        <td colspan=3 style="text-align:right">
+            <button id="start_button" onclick="startVoiceRecognition(event)">
+                <img id="start_img" src="mic.gif" height=40px alt="start">
+            </button>
+        </td>
     </tr>
     <tr>
         <td colspan=3>
@@ -37,7 +41,7 @@ InMoovBrain Server URL: <input type="text" id="cfg_inmoovbrain_server" value="ht
     <tr>
         <td width=50px>Comando:</td>
         <td>
-            <input type="text" id="console_input" onkeypress="consoleInputKeyPress()" style="width:100%">
+            <input type="text" id="console_input" onkeydown="consoleInputKeyDown()" onkeypress="consoleInputKeyPress()" style="width:100%">
         </td>
         <td width=30px>
             <img src="loading_animation.gif" id="console_loading" style="display:none; width:20px">
@@ -359,33 +363,6 @@ InMoovBrain Server URL: <input type="text" id="cfg_inmoovbrain_server" value="ht
 <br>
 <clear_console_button>borrar consola</clear_console_button>
 <br>
-<div id="info">
-    <p id="info_sending_speech">Enviando comando de voz al robot</p>
-    <p id="info_start">Haz click en el micrófono para dictar un comando de voz</p>
-    <p id="info_speak_now">Habla ahora</p>
-    <p id="info_no_speech">No se ha detectado sonido. Revisa la
-    <a href="//support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892">
-        configuración del micrófono</a>.</p>
-    <p id="info_no_microphone" style="display:none">
-    No se ha detectado micrófono. Revisa la
-    <a href="//support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892">
-        configuración del micrófono</a> are configured correctly.</p>
-    <p id="info_allow">Haz click en "Permitir" para habilitar el uso del micrófono</p>
-    <p id="info_denied">Uso del micrófono denegado</p>
-    <p id="info_blocked">Uso del micrófono bloqueado. Para cambiarlo ve a chrome://settings/contentExceptions#media-stream</p>
-    <p id="info_upgrade">Web Speech API no está soportado por este navegador. Es necesario
-    <a href="//www.google.com/chrome">Chrome</a>
-    version 25 o superior</p>
-</div>
-<div class="right">
-    <button id="start_button" onclick="startButton(event)">
-        <img id="start_img" src="mic.gif" alt="Start"></button>
-</div>
-<div id="results">
-    <span id="final_span" class="final"></span>
-    <span id="interim_span" class="interim"></span>
-    <p>
-</div>
 </div>
 </body>
 </html>

@@ -1,3 +1,5 @@
+// TODO
+
 var final_transcript = '';
 var recognizing = false;
 var ignore_onend;
@@ -32,14 +34,26 @@ var movementSliderControl=
     ["cfg_righthand_pinky_current_slider",0,"myInMoov.rightHand.pinky.moveTo"]
 ];
 
+var resourceStrings=
+{
+    "info_mic_speak_now" : "¡Habla ahora!",
+    "info_mic_no_speech" : "No se ha detectado sonido. Revisa la <a href='//support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892'>configuración del micrófono</a>",
+    "info_mic_no_microphone" : "No se ha detectado micrófono. Revisa la <a href='//support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892'>configuración del micrófono</a>",
+    "info_mic_allow" : "Haz click en 'Permitir' para habilitar el uso del micrófono",
+    "info_mic_denied" : "Uso del micrófono denegado",
+    "info_mic_error" : "Error reconociendo voz. Revisa que tienes conexión a internet y el micrófono habilitado",
+    "info_mic_blocked" : "Uso del micrófono bloqueado. Para cambiarlo ve a chrome://settings/contentExceptions#media-stream",
+    "info_mic_upgrade" : "Web Speech API no está soportado por este navegador. Es necesario <a href='//www.google.com/chrome'>Chrome</a> version 25 o superior"
+};
+
+var commandHistory=[];
+var commandHistoryIndex;
+var ignoreInputKeyPress=false;
+
 var consoleVersion="0.1";
 
 function updateServoPos()
 {
-    //newVal=$("#"+movementSliderControl[n][0]).slider("value");
-    //alert(newVal);
-    //return 1;
-    
     for (n=0; n<movementSliderControl.length;n++)
     {
         newVal=$("#"+movementSliderControl[n][0]).slider("value");
@@ -54,16 +68,6 @@ function updateServoPos()
     }
 }
 
-function initMovementSliderControl()
-{
-    for (n=0; n<movementSliderControl.length;n++)
-    {
-        val=$("#"+movementSliderControl[n][0]).slider("value");
-        movementSliderControl[n][1]=val;
-    }
-
-}
-
 function init()
 {
     for (n=0; n<movementSliderControl.length;n++)
@@ -75,156 +79,57 @@ function init()
             change: function( event, ui ) {sliderServoPosChange(ui);}
         });
     }
-    
+  
+    for (n=0; n<movementSliderControl.length;n++)
+    {
+        val=$("#"+movementSliderControl[n][0]).slider("value");
+        movementSliderControl[n][1]=val;
+    }
+
     $("#cfg_radio_bodypart").buttonset();
     $("#cfg_radio_bodypart input[type=radio]").change(function() {
         changeServoSlidersPanel();
     });
     
     $("refresh_servo_sliders_button").button();
-    $("refresh_servo_sliders_button").click(function() {$("#console_text").append("<span style='color: blue'>Actualizando estado de los servos...</span><br>");consoleSendCommand("getservopositions", "", false, false, refreshServoSlidersFromServerCallback1);});
+    $("refresh_servo_sliders_button").click(function() {$("#console_text").append("<span style='color: blue'>Actualizando estado de los servos...</span><br>");$("#console_text").scrollTop($("#console_text")[0].scrollHeight);consoleSendCommand("getservopositions", "", false, false, refreshServoSlidersFromServerCallback1);});
     
     $("rest_button").button();
-    $("rest_button").click(function() {consoleSendCommand("runpythoncmd", "myInMoov.rest()", true, false, null);});
+    $("rest_button").click(function() {consoleSendCommand("runpythoncmd", "myInMoov.rest()", true, false, function(){consoleSendCommand("getservopositions", "", false, false, refreshServoSlidersFromServerCallback1);});});
     
     $("clear_console_button").button();
     $("clear_console_button").click(function() {$("#console_text").empty();});
     
     $("connect_button").button();
     $("connect_button").click(function() {consoleSendCommand("getserverstatus", "", false, false, connectToServerCallback);});
-
-    showInfo('info_start');
-    
-    if (!('webkitSpeechRecognition' in window)) {
-        upgrade();
-        return;
-    }
-    
-    start_button.style.display = 'inline-block';
-    recognition = new webkitSpeechRecognition();
-    recognition.continuous = false;
-    recognition.interimResults = false;
-    
-    recognition.onstart = function() {
-        recognizing = true;
-        showInfo('info_speak_now');
-        start_img.src = 'mic-animate.gif';
-    };
-    
-    recognition.onerror = function(event) {
-        if (event.error == 'no-speech') {
-            start_img.src = 'mic.gif';
-            showInfo('info_no_speech');
-            ignore_onend = true;
-        }
-        if (event.error == 'audio-capture') {
-            start_img.src = 'mic.gif';
-            showInfo('info_no_microphone');
-            ignore_onend = true;
-        }
-        if (event.error == 'not-allowed') {
-            if (event.timeStamp - start_timestamp < 100) {
-                showInfo('info_blocked');
-            } else {
-                showInfo('info_denied');
-            }
-            ignore_onend = true;
-        }
-    };
-    
-    recognition.onend = function() {
-        recognizing = false;
-        if (ignore_onend) {
-            return;
-        }
-        start_img.src = 'mic.gif';
-        if (!final_transcript) {
-            showInfo('info_start');
-            return;
-        }
-        showInfo('');
-    };
-    
-    recognition.onresult = function(event) {
-        var isFinal=false;
-        var interim_transcript = '';
-        for (var i = event.resultIndex; i < event.results.length; ++i) {
-            if (event.results[i].isFinal) {
-                isFinal=true;
-                final_transcript += event.results[i][0].transcript;
-            } else {
-                interim_transcript += event.results[i][0].transcript;
-            }
-        }
-        final_transcript = final_transcript.toLowerCase();
-        final_span.innerHTML = linebreak(final_transcript);
-        interim_span.innerHTML = linebreak(interim_transcript);
-        
-        if (isFinal)
-        {
-            //$("#console_input").val("MyInMoov.voiceCommand(\""+final_transcript+"\")");
-            //$("#console_input").focus();
-            consoleSendCommand("runpythoncmd","myInMoov.voiceCommand(\""+final_transcript+"\")", true, false, null);
-            showInfo('info_sending_speech');
-        }
-    };
-    
-    initMovementSliderControl();
-    setInterval(updateServoPos, 50);
-    $("#console_text").append("<span style='color: blue'>InMoovBrain Console. Versión: "+consoleVersion+"</span><br>");
 }
 
-function upgrade() {
-    start_button.style.visibility = 'hidden';
-    showInfo('info_upgrade');
-}
-
-var two_line = /\n\n/g;
-var one_line = /\n/g;
-function linebreak(s) {
-    return s.replace(two_line, '<p></p>').replace(one_line, '<br>');
-}
-
-var first_char = /\S/;
-function capitalize(s) {
-    return s.replace(first_char, function(m) { return m.toUpperCase(); });
-}
-
-function startButton(event) {
-    if (recognizing) {
+function startVoiceRecognition(event)
+{
+    if (recognizing)
+    {
         recognition.stop();
         return;
     }
+    
     final_transcript = '';
     recognition.lang = "es-ES";
     recognition.start();
     ignore_onend = false;
-    final_span.innerHTML = '';
-    interim_span.innerHTML = '';
-    start_img.src = 'mic-slash.gif';
-    showInfo('info_allow');
+    $("#start_img").prop("src", 'mic-slash.gif');
+    $("#console_text").append("<span style='color: blue'>"+resourceStrings['info_mic_allow']+"</span><br>");
     start_timestamp = event.timeStamp;
 }
 
-function showInfo(s) {
-    var info=document.getElementById("info");
-    if (s) {
-        for (var child = info.firstChild; child; child = child.nextSibling) {
-            if (child.style) {
-                child.style.display = child.id == s ? 'inline' : 'none';
-            }
-        }
-        info.style.visibility = 'visible';
-    } else {
-        info.style.visibility = 'hidden';
-    }
-}
-
-function consoleSendCommand(cmd, pars, writeToConsole, setConsoleFocus, callback) {
+function consoleSendCommand(cmd, pars, writeToConsole, setConsoleFocus, callback)
+{
     if (writeToConsole)
     {
         $("#console_text").append(">> "+pars+"<br>");
         $("#console_text").scrollTop($("#console_text")[0].scrollHeight);
+        commandHistory.push(pars);
+        if (commandHistory.length>5) commandHistory.shift();
+        commandHistoryIndex=commandHistory.length;
     }
     
     $.ajax({
@@ -281,14 +186,36 @@ function consoleSendCommand(cmd, pars, writeToConsole, setConsoleFocus, callback
            });
 }
 
-function consoleInputKeyPress() {
+function consoleInputKeyPress()
+{
     e = window.event;
     var keyCode = e.keyCode || e.which;
-    if (keyCode == '13'){
+    if (keyCode == '13')
+    {
         $("#console_input").prop("disabled", true);
         $("#console_loading").show();
         consoleSendCommand("runpythoncmd",$("#console_input").val(), true, true, null);
         $("#console_input").val("");
+        return false;
+    }
+    if (keyCode!='38' && keyCode!='40' && commandHistoryIndex<commandHistory.length) commandHistoryIndex=commandHistory.length;
+}
+
+function consoleInputKeyDown()
+{
+    e = window.event;
+    var keyCode = e.keyCode || e.which;
+    if (keyCode == '38' || keyCode=='40')
+    {
+        if (!ignoreInputKeyPress)
+        {
+            ignoreInputKeyPress=true;
+            if (keyCode=='38' && --commandHistoryIndex<0) commandHistoryIndex=0;
+            if (keyCode=='40' && ++commandHistoryIndex>commandHistory.length) commandHistoryIndex=commandHistory.length;
+            $("#console_input").val(commandHistory[commandHistoryIndex]);
+            setTimeout(function(){ignoreInputKeyPress=false},1);
+            return false;
+        }
         return false;
     }
 }
@@ -338,13 +265,15 @@ function refreshServoSlidersFromServerCallback2(data)
     servoStatus=JSON.parse(data);
     for (var index in servoStatus)
     {
-        if (servoStatus[index]=="True")
+//        alert(index+": "+servoStatus[index]);
+        if (servoStatus[index]==true)
             $("#check_"+index).attr("checked", "checked");
         else
             $("#check_"+index).removeAttr("checked", "checked");
         clickEnableSliders($("#check_"+index)[0], false);
     }
     $("#console_text").append("<span style='color: blue'>Actualización del estado de los servos OK</span><br>");
+    $("#console_text").scrollTop($("#console_text")[0].scrollHeight);
 }
 
 function clickEnableSliders(cb, sendCommand)
@@ -385,15 +314,109 @@ function connectToServerCallback(data)
 
     if (isRunning && version!="")
     {
+        $("#console_text").append("<span style='color: blue'>InMoovBrain Console. Versión: "+consoleVersion+"</span><br>");
         $("#console_text").append("<span style='color: blue'>Conectado al servidor en la URL: "+$("#cfg_inmoovbrain_server").val()+" (versión "+version+")</span><br>");
         $("#console_text").append("<span style='color: blue'>Actualizando estado de los servos...</span><br>");
+        $("#console_text").scrollTop($("#console_text")[0].scrollHeight);
         consoleSendCommand("getservopositions", "", false, false, refreshServoSlidersFromServerCallback1);
         $("#console_connect_screen").hide();
         $("#console_content").show();
-
+        setInterval(updateServoPos, 50);
+        initSpeechRecognition();
     }
     else
         alert("No se ha podido conectar con el servidor. Verifique la URL y que el mismo esté respondiendo");
+}
+
+function initSpeechRecognition()
+{
+    if (!('webkitSpeechRecognition' in window))
+    {
+        $("#console_text").append("<span style='color: red'>"+resourceStrings['info_mic_upgrade']+"</span><br>");
+        $("#console_text").scrollTop($("#console_text")[0].scrollHeight);
+        return;
+    }
+    
+    recognition = new webkitSpeechRecognition();
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    
+    recognition.onstart = function()
+    {
+        recognizing = true;
+        $("#console_text").append("<span style='color: blue'>"+resourceStrings['info_mic_speak_now']+"</span><br>");
+        $("#console_text").scrollTop($("#console_text")[0].scrollHeight);
+        $("#start_img").prop("src",'mic-animate.gif');
+    };
+    
+    recognition.onerror = function(event)
+    {
+        if (event.error == 'no-speech')
+        {
+            $("#start_img").prop("src",'mic.gif');
+            $("#console_text").append("<span style='color: red'>"+resourceStrings['info_mic_no_speech']+"</span><br>");
+            ignore_onend = true;
+        }
+        else if (event.error == 'audio-capture')
+        {
+            $("#start_img").prop("src",'mic.gif');
+            $("#console_text").append("<span style='color: red'>"+resourceStrings['info_mic_no_microphone']+"</span><br>");
+            ignore_onend = true;
+        }
+        else if (event.error == 'not-allowed')
+        {
+            if (event.timeStamp - start_timestamp < 100)
+            {
+                $("#console_text").append("<span style='color: red'>"+resourceStrings['info_mic_blocked']+"</span><br>");
+            }
+            else
+            {
+                $("#console_text").append("<span style='color: red'>"+resourceStrings['info_mic_denied']+"</span><br>");
+            }
+            ignore_onend = true;
+        }
+        else
+        {
+            $("#start_img").prop("src",'mic.gif');
+            $("#console_text").append("<span style='color: red'>"+resourceStrings['info_mic_error']+"</span><br>");
+            ignore_onend = true;
+        }
+        $("#console_text").scrollTop($("#console_text")[0].scrollHeight);
+    };
+    
+    recognition.onend = function()
+    {
+        recognizing = false;
+        if (ignore_onend) return;
+        
+        $("#start_img.").prop("src", 'mic.gif');
+        if (!final_transcript) return;
+    };
+    
+    recognition.onresult = function(event)
+    {
+        var isFinal=false;
+        var interim_transcript = '';
+        for (var i = event.resultIndex; i < event.results.length; ++i)
+        {
+            if (event.results[i].isFinal)
+            {
+                isFinal=true;
+                final_transcript += event.results[i][0].transcript;
+            }
+            else
+            {
+                interim_transcript += event.results[i][0].transcript;
+            }
+        }
+        
+        if (isFinal)
+        {
+            //$("#console_input").val("MyInMoov.voiceCommand(\""+final_transcript+"\")");
+            //$("#console_input").focus();
+            consoleSendCommand("runpythoncmd","myInMoov.voiceCommand(\""+final_transcript+"\")", true, false, null);
+        }
+    };
 }
 
 $(document).ready(function(){init();});
