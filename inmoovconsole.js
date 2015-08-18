@@ -1,4 +1,5 @@
-// TODO
+// TODO. Si al intentar conectarnos al server no hay conexion o da error de certificado no hace nada. Hay que controlar el error
+// Incluir licencias de cada software usado (como i18next.com)
 
 var final_transcript = '';
 var recognizing = false;
@@ -34,22 +35,9 @@ var movementSliderControl=
     ["cfg_righthand_pinky_current_slider",0,"myInMoov.rightHand.pinky.moveTo"]
 ];
 
-var resourceStrings=
-{
-    "info_mic_speak_now" : "¡Habla ahora!",
-    "info_mic_no_speech" : "No se ha detectado sonido. Revisa la <a href='//support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892'>configuración del micrófono</a>",
-    "info_mic_no_microphone" : "No se ha detectado micrófono. Revisa la <a href='//support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892'>configuración del micrófono</a>",
-    "info_mic_allow" : "Haz click en 'Permitir' para habilitar el uso del micrófono",
-    "info_mic_denied" : "Uso del micrófono denegado",
-    "info_mic_error" : "Error reconociendo voz. Revisa que tienes conexión a internet y el micrófono habilitado",
-    "info_mic_blocked" : "Uso del micrófono bloqueado. Para cambiarlo ve a chrome://settings/contentExceptions#media-stream",
-    "info_mic_upgrade" : "Web Speech API no está soportado por este navegador. Es necesario <a href='//www.google.com/chrome'>Chrome</a> version 25 o superior"
-};
-
 var commandHistory=[];
 var commandHistoryIndex;
 var ignoreInputKeyPress=false;
-
 var consoleVersion="0.1";
 
 function updateServoPos()
@@ -92,7 +80,6 @@ function init()
     });
     
     $("refresh_servo_sliders_button").button();
-    $("refresh_servo_sliders_button").click(function() {$("#console_text").append("<span style='color: blue'>Actualizando estado de los servos...</span><br>");$("#console_text").scrollTop($("#console_text")[0].scrollHeight);consoleSendCommand("getservopositions", "", false, false, refreshServoSlidersFromServerCallback1);});
     
     $("rest_button").button();
     $("rest_button").click(function() {consoleSendCommand("runpythoncmd", "myInMoov.rest()", true, false, function(){consoleSendCommand("getservopositions", "", false, false, refreshServoSlidersFromServerCallback1);});});
@@ -102,7 +89,26 @@ function init()
     
     $("connect_button").button();
     $("connect_button").click(function() {consoleSendCommand("getserverstatus", "", false, false, connectToServerCallback);});
-}
+    
+    i18n.init({ fallbackLng: 'es-ES' , detectLngQS: 'lang'}, function(err, t)
+    {
+        $("span").i18n();
+        $("label").i18n();
+
+        $("refresh_servo_sliders_button").button('option', 'label', t('buttons.refresh_servos'));
+        $("rest_button").button('option', 'label', t('buttons.rest'));
+        $("clear_console_button").button('option', 'label', t('buttons.clear_console'));
+        $("connect_button").button('option', 'label', t('buttons.connect_to_server'));
+        $("#cfg_radio_bodypart_leftarm").button('option', 'label', t('servos.leftarm'));
+        $("#cfg_radio_bodypart_head").button('option', 'label', t('servos.head'));
+        $("#cfg_radio_bodypart_rightarm").button('option', 'label', t('servos.rightarm'));
+        
+        $("refresh_servo_sliders_button").click(function() {$("#console_text").append("<span style='color: blue'>"+i18n.t("info_console.refreshing_servos")+"</span><br>");$("#console_text").scrollTop($("#console_text")[0].scrollHeight);consoleSendCommand("getservopositions", "", false, false, refreshServoSlidersFromServerCallback1);});
+    
+    });
+  
+  
+   }
 
 function startVoiceRecognition(event)
 {
@@ -117,7 +123,7 @@ function startVoiceRecognition(event)
     recognition.start();
     ignore_onend = false;
     $("#start_img").prop("src", 'mic-slash.gif');
-    $("#console_text").append("<span style='color: blue'>"+resourceStrings['info_mic_allow']+"</span><br>");
+    $("#console_text").append("<span style='color: blue'>"+i18n.t('info_mic.allow')+"</span><br>");
     start_timestamp = event.timeStamp;
 }
 
@@ -272,7 +278,7 @@ function refreshServoSlidersFromServerCallback2(data)
             $("#check_"+index).removeAttr("checked", "checked");
         clickEnableSliders($("#check_"+index)[0], false);
     }
-    $("#console_text").append("<span style='color: blue'>Actualización del estado de los servos OK</span><br>");
+    $("#console_text").append("<span style='color: blue'>"+i18n.t("info_console.refreshing_servos_ok")+"</span><br>");
     $("#console_text").scrollTop($("#console_text")[0].scrollHeight);
 }
 
@@ -314,9 +320,9 @@ function connectToServerCallback(data)
 
     if (isRunning && version!="")
     {
-        $("#console_text").append("<span style='color: blue'>InMoovBrain Console. Versión: "+consoleVersion+"</span><br>");
-        $("#console_text").append("<span style='color: blue'>Conectado al servidor en la URL: "+$("#cfg_inmoovbrain_server").val()+" (versión "+version+")</span><br>");
-        $("#console_text").append("<span style='color: blue'>Actualizando estado de los servos...</span><br>");
+        $("#console_text").append("<span style='color: blue'>"+i18n.t("info_console.welcome")+": "+consoleVersion+"</span><br>");
+        $("#console_text").append("<span style='color: blue'>"+i18n.t("info_console.connected")+": "+$("#cfg_inmoovbrain_server").val()+"</span><br>");
+        $("#console_text").append("<span style='color: blue'>"+i18n.t("info_console.refreshing_servos")+"</span><br>");
         $("#console_text").scrollTop($("#console_text")[0].scrollHeight);
         consoleSendCommand("getservopositions", "", false, false, refreshServoSlidersFromServerCallback1);
         $("#console_connect_screen").hide();
@@ -332,7 +338,7 @@ function initSpeechRecognition()
 {
     if (!('webkitSpeechRecognition' in window))
     {
-        $("#console_text").append("<span style='color: red'>"+resourceStrings['info_mic_upgrade']+"</span><br>");
+        $("#console_text").append("<span style='color: red'>"+i18n.t('info_mic.upgrade')+"</span><br>");
         $("#console_text").scrollTop($("#console_text")[0].scrollHeight);
         return;
     }
@@ -344,7 +350,7 @@ function initSpeechRecognition()
     recognition.onstart = function()
     {
         recognizing = true;
-        $("#console_text").append("<span style='color: blue'>"+resourceStrings['info_mic_speak_now']+"</span><br>");
+        $("#console_text").append("<span style='color: blue'>"+i18n.t('info_mic.speak_now')+"</span><br>");
         $("#console_text").scrollTop($("#console_text")[0].scrollHeight);
         $("#start_img").prop("src",'mic-animate.gif');
     };
@@ -354,31 +360,31 @@ function initSpeechRecognition()
         if (event.error == 'no-speech')
         {
             $("#start_img").prop("src",'mic.gif');
-            $("#console_text").append("<span style='color: red'>"+resourceStrings['info_mic_no_speech']+"</span><br>");
+            $("#console_text").append("<span style='color: red'>"+i18n.t('info_mic.no_speech')+"</span><br>");
             ignore_onend = true;
         }
         else if (event.error == 'audio-capture')
         {
             $("#start_img").prop("src",'mic.gif');
-            $("#console_text").append("<span style='color: red'>"+resourceStrings['info_mic_no_microphone']+"</span><br>");
+            $("#console_text").append("<span style='color: red'>"+i18n.t('info_mic.no_microphone')+"</span><br>");
             ignore_onend = true;
         }
         else if (event.error == 'not-allowed')
         {
             if (event.timeStamp - start_timestamp < 100)
             {
-                $("#console_text").append("<span style='color: red'>"+resourceStrings['info_mic_blocked']+"</span><br>");
+                $("#console_text").append("<span style='color: red'>"+i18n.t('info_mic.blocked')+"</span><br>");
             }
             else
             {
-                $("#console_text").append("<span style='color: red'>"+resourceStrings['info_mic_denied']+"</span><br>");
+                $("#console_text").append("<span style='color: red'>"+i18n.t('info_mic.denied')+"</span><br>");
             }
             ignore_onend = true;
         }
         else
         {
             $("#start_img").prop("src",'mic.gif');
-            $("#console_text").append("<span style='color: red'>"+resourceStrings['info_mic_error']+"</span><br>");
+            $("#console_text").append("<span style='color: red'>"+i18n.t('info_mic.error')+"</span><br>");
             ignore_onend = true;
         }
         $("#console_text").scrollTop($("#console_text")[0].scrollHeight);
@@ -389,7 +395,7 @@ function initSpeechRecognition()
         recognizing = false;
         if (ignore_onend) return;
         
-        $("#start_img.").prop("src", 'mic.gif');
+        $("#start_img").prop("src", 'mic.gif');
         if (!final_transcript) return;
     };
     

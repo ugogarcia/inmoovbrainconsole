@@ -5,6 +5,7 @@
     <head>
         <script src="jquery-1.11.3.min.js"></script>
         <script src="jquery-ui.min.js"></script>
+        <script src="i18next-1.10.1.min.js"></script>
         <script src="inmoovconsole.js"></script>
         <link href="jquery-ui.min.css" rel="stylesheet" type="text/css">
         <link href="inmoovconsole.css" rel="stylesheet" type="text/css">
@@ -15,9 +16,9 @@
 
 <div id="console_connect_screen" style="text-align:center">
 <br><br>
-InMoovBrain Server URL: <input type="text" id="cfg_inmoovbrain_server" value="https://www.localhost:8443" style="width:200px">
+<span data-i18n="general.server_url">URL del servidor InMoovBrain</span>: <input type="text" id="cfg_inmoovbrain_server" value="https://www.localhost:8443" style="width:200px">
 <br><br>
-<connect_button>¡conectarse al robot!</connect_button>
+<connect_button data-i18n="buttons.connect_to_server">¡conectarse al robot!</connect_button>
 </div>
 
 <div id="console_content" style="display:none">
@@ -39,7 +40,7 @@ InMoovBrain Server URL: <input type="text" id="cfg_inmoovbrain_server" value="ht
         </td>
     </tr>
     <tr>
-        <td width=50px>Comando:</td>
+        <td width=50px><span data-i18n="general.command">Comando</span>:</td>
         <td>
             <input type="text" id="console_input" onkeydown="consoleInputKeyDown()" onkeypress="consoleInputKeyPress()" style="width:100%">
         </td>
@@ -64,112 +65,112 @@ InMoovBrain Server URL: <input type="text" id="cfg_inmoovbrain_server" value="ht
 <table border=0 cellspacing=0 align=center>
     <tr id="cfg_rightarm_omoplate_row">
         <td style="border-bottom: 1px solid grey; width: 30px"><input type="checkbox" id="check_rightarm" onclick="clickEnableSliders(this, true)" value="rightArm"></td>
-        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px">Omóplato</td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Mínimo</td>
+        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px"><span data-i18n="servos.omoplate">Omóplato</span></td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.min">Mínimo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_rightarm_omoplate_min" value="0" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Máximo</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.max">Máximo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_rightarm_omoplate_max" value="180" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Actual</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.current">Actual</span></td>
         <td style="border-bottom: 1px solid grey"><div id="cfg_rightarm_omoplate_current_slider" style="width:180px"></div></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_rightarm_omoplate_current_value" value="90" style="width:25px" onchange="servoPosValueChange('cfg_rightarm_omoplate_current')"></td>
     </tr>
     <tr id="cfg_rightarm_shoulder_row">
         <td style="width: 30px"></td>
-        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px">Hombro</td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Mínimo</td>
+        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px"><span data-i18n="servos.shoulder">Hombro</span></td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.min">Mínimo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_rightarm_shoulder_min" value="0" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Máximo</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.max">Máximo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_rightarm_shoulder_max" value="180" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Actual</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.current">Actual</span></td>
         <td style="border-bottom: 1px solid grey"><div id="cfg_rightarm_shoulder_current_slider" style="width:180px"></div></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_rightarm_shoulder_current_value" value="90" style="width:25px" onchange="servoPosValueChange('cfg_rightarm_shoulder_current')"></td>
     </tr>
     <tr id="cfg_rightarm_rotate_row">
         <td style="width: 30px"></td>
-        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px">Rotación</td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Mínimo</td>
+        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px"><span data-i18n="servos.rotate">Rotación</span></td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.min">Mínimo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_rightarm_rotate_min" value="0" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Máximo</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.max">Máximo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_rightarm_rotate_max" value="180" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Actual</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.current">Actual</span></td>
         <td style="border-bottom: 1px solid grey"><div id="cfg_rightarm_rotate_current_slider" style="width:180px"></div></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_rightarm_rotate_current_value" value="90" style="width:25px" onchange="servoPosValueChange('cfg_rightarm_rotate_current')"></td>
     </tr>
     <tr id="cfg_rightarm_bicep_row">
         <td style="width: 30px"></td>
-        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px">Bicep</td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Mínimo</td>
+        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px"><span data-i18n="servos.bicep">Bicep</span></td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.min">Mínimo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_rightarm_bicep_min" value="0" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Máximo</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.max">Máximo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_rightarm_bicep_max" value="180" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Actual</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.current">Actual</span></td>
         <td style="border-bottom: 1px solid grey"><div id="cfg_rightarm_bicep_current_slider" style="width:180px"></div></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_rightarm_bicep_current_value" value="90" style="width:25px" onchange="servoPosValueChange('cfg_rightarm_bicep_current')"></td>
     </tr>
     
     <tr id="cfg_righthand_wrist_row">
         <td style="border-bottom: 1px solid grey; width: 30px"><input type="checkbox" id="check_righthand" onclick="clickEnableSliders(this, true)" value="rightHand"></td>
-        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px">Muñeca</td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Mínimo</td>
+        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px"><span data-i18n="servos.wrist">Muñeca</span></td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.min">Mínimo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_righthand_wrist_min" value="0" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Máximo</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.max">Máximo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_righthand_wrist_max" value="180" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Actual</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.current">Actual</span></td>
         <td style="border-bottom: 1px solid grey"><div id="cfg_righthand_wrist_current_slider" style="width:180px"></div></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_righthand_wrist_current_value" value="90" style="width:25px" onchange="servoPosValueChange('cfg_righthand_wrist_current')"></td>
     </tr>
     <tr id="cfg_righthand_thumb_row">
         <td style="width: 30px"></td>
-        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px">Pulgar</td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Mínimo</td>
+        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px"><span data-i18n="servos.thumb">Pulgar</span></td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.min">Mínimo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_righthand_thumb_min" value="0" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Máximo</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.max">Máximo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_righthand_thumb_max" value="180" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Actual</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.current">Actual</span></td>
         <td style="border-bottom: 1px solid grey"><div id="cfg_righthand_thumb_current_slider" style="width:180px"></div></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_righthand_thumb_current_value" value="90" style="width:25px" onchange="servoPosValueChange('cfg_righthand_thumb_current')"></td>
     </tr>
     <tr id="cfg_righthand_index_row">
         <td style="width: 30px"></td>
-        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px">Indice</td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Mínimo</td>
+        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px"><span data-i18n="servos.index">Indice</span></td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.min">Mínimo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_righthand_index_min" value="0" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Máximo</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.max">Máximo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_righthand_index_max" value="180" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Actual</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.current">Actual</span></td>
         <td style="border-bottom: 1px solid grey"><div id="cfg_righthand_index_current_slider" style="width:180px"></div></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_righthand_index_current_value" value="90" style="width:25px" onchange="servoPosValueChange('cfg_righthand_index_current')"></td>
     </tr>
     <tr id="cfg_righthand_majeure_row">
         <td style="width: 30px"></td>
-        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px">Corazón</td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Mínimo</td>
+        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px"><span data-i18n="servos.majeure">Corazón</span></td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.min">Mínimo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_righthand_majeure_min" value="0" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Máximo</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.max">Máximo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_righthand_majeure_max" value="180" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Actual</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.current">Actual</span></td>
         <td style="border-bottom: 1px solid grey"><div id="cfg_righthand_majeure_current_slider" style="width:180px"></div></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_righthand_majeure_current_value" value="90" style="width:25px" onchange="servoPosValueChange('cfg_righthand_majeure_current')"></td>
     </tr>
     <tr id="cfg_righthand_ringfinger_row">
         <td style="width: 30px"></td>
-        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px">Anular</td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Mínimo</td>
+        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px"><span data-i18n="servos.ringfinger">Anular</span></td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.min">Mínimo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_righthand_ringfinger_min" value="0" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Máximo</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.max">Máximo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_righthand_ringfinger_max" value="180" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Actual</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.current">Actual</span></td>
         <td style="border-bottom: 1px solid grey"><div id="cfg_righthand_ringfinger_current_slider" style="width:180px"></div></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_righthand_ringfinger_current_value" value="90" style="width:25px" onchange="servoPosValueChange('cfg_righthand_ringfinger_current')"></td>
     </tr>
     <tr id="cfg_righthand_pinky_row">
         <td style="width: 30px"></td>
-        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px">Meñique</td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Mínimo</td>
+        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px"><span data-i18n="servos.pinky">Meñique</span></td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.min">Mínimo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_righthand_pinky_min" value="0" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Máximo</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.max">Máximo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_righthand_pinky_max" value="180" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Actual</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.current">Actual</span></td>
         <td style="border-bottom: 1px solid grey"><div id="cfg_righthand_pinky_current_slider" style="width:180px"></div></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_righthand_pinky_current_value" value="90" style="width:25px" onchange="servoPosValueChange('cfg_righthand_pinky_current')"></td>
     </tr>
@@ -180,112 +181,112 @@ InMoovBrain Server URL: <input type="text" id="cfg_inmoovbrain_server" value="ht
 <table border=0 cellspacing=0 align=center>
     <tr id="cfg_leftarm_omoplate_row">
         <td style="border-bottom: 1px solid grey; width: 30px"><input type="checkbox" id="check_leftarm" onclick="clickEnableSliders(this, true)" value="leftArm"></td>
-        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px">Omóplato</td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Mínimo</td>
+        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px"><span data-i18n="servos.omoplate">Omóplato</span></td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.min">Mínimo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_leftarm_omoplate_min" value="0" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Máximo</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.max">Máximo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_leftarm_omoplate_max" value="180" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Actual</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.current">Actual</span></td>
         <td style="border-bottom: 1px solid grey"><div id="cfg_leftarm_omoplate_current_slider" style="width:180px"></div></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_leftarm_omoplate_current_value" value="90" style="width:25px" onchange="servoPosValueChange('cfg_leftarm_omoplate_current')"></td>
     </tr>
     <tr id="cfg_leftarm_shoulder_row">
         <td style="width: 30px"></td>
-        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px">Hombro</td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Mínimo</td>
+        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px"><span data-i18n="servos.shoulder">Hombro</span></td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.min">Mínimo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_leftarm_shoulder_min" value="0" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Máximo</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.max">Máximo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_leftarm_shoulder_max" value="180" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Actual</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.current">Actual</span></td>
         <td style="border-bottom: 1px solid grey"><div id="cfg_leftarm_shoulder_current_slider" style="width:180px"></div></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_leftarm_shoulder_current_value" value="90" style="width:25px" onchange="servoPosValueChange('cfg_leftarm_shoulder_current')"></td>
     </tr>
     <tr id="cfg_leftarm_rotate_row">
         <td style="width: 30px"></td>
-        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px">Rotación</td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Mínimo</td>
+        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px"><span data-i18n="servos.rotate">Rotación</span></td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.min">Mínimo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_leftarm_rotate_min" value="0" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Máximo</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.max">Máximo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_leftarm_rotate_max" value="180" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Actual</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.current">Actual</span></td>
         <td style="border-bottom: 1px solid grey"><div id="cfg_leftarm_rotate_current_slider" style="width:180px"></div></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_leftarm_rotate_current_value" value="90" style="width:25px" onchange="servoPosValueChange('cfg_leftarm_rotate_current')"></td>
     </tr>
     <tr id="cfg_leftarm_bicep_row">
         <td style="width: 30px"></td>
-        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px">Bicep</td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Mínimo</td>
+        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px"><span data-i18n="servos.bicep">Bicep</span></td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.min">Mínimo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_leftarm_bicep_min" value="0" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Máximo</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.max">Máximo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_leftarm_bicep_max" value="180" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Actual</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.current">Actual</span></td>
         <td style="border-bottom: 1px solid grey"><div id="cfg_leftarm_bicep_current_slider" style="width:180px"></div></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_leftarm_bicep_current_value" value="90" style="width:25px" onchange="servoPosValueChange('cfg_leftarm_bicep_current')"></td>
     </tr>
     
     <tr id="cfg_lefthand_wrist_row">
         <td style="border-bottom: 1px solid grey; width: 30px"><input type="checkbox" id="check_lefthand" onclick="clickEnableSliders(this, true)" value="leftHand"></td>
-        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px">Muñeca</td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Mínimo</td>
+        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px"><span data-i18n="servos.wrist">Muñeca</span></td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.min">Mínimo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_lefthand_wrist_min" value="0" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Máximo</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.max">Máximo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_lefthand_wrist_max" value="180" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Actual</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.current">Actual</span></td>
         <td style="border-bottom: 1px solid grey"><div id="cfg_lefthand_wrist_current_slider" style="width:180px"></div></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_lefthand_wrist_current_value" value="90" style="width:25px" onchange="servoPosValueChange('cfg_lefthand_wrist_current')"></td>
     </tr>
     <tr id="cfg_lefthand_thumb_row">
         <td style="width: 30px"></td>
-        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px">Pulgar</td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Mínimo</td>
+        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px"><span data-i18n="servos.thumb">Pulgar</span></td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.min">Mínimo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_lefthand_thumb_min" value="0" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Máximo</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.max">Máximo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_lefthand_thumb_max" value="180" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Actual</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.current">Actual</span></td>
         <td style="border-bottom: 1px solid grey"><div id="cfg_lefthand_thumb_current_slider" style="width:180px"></div></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_lefthand_thumb_current_value" value="90" style="width:25px" onchange="servoPosValueChange('cfg_lefthand_thumb_current')"></td>
     </tr>
     <tr id="cfg_lefthand_index_row">
         <td style="width: 30px"></td>
-        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px">Indice</td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Mínimo</td>
+        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px"><span data-i18n="servos.index">Indice</span></td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.min">Mínimo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_lefthand_index_min" value="0" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Máximo</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.max">Máximo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_lefthand_index_max" value="180" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Actual</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.current">Actual</span></td>
         <td style="border-bottom: 1px solid grey"><div id="cfg_lefthand_index_current_slider" style="width:180px"></div></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_lefthand_index_current_value" value="90" style="width:25px" onchange="servoPosValueChange('cfg_lefthand_index_current')"></td>
     </tr>
     <tr id="cfg_lefthand_majeure_row">
         <td style="width: 30px"></td>
-        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px">Corazón</td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Mínimo</td>
+        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px"><span data-i18n="servos.majeure">Corazón</span></td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.min">Mínimo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_lefthand_majeure_min" value="0" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Máximo</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.max">Máximo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_lefthand_majeure_max" value="180" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Actual</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.current">Actual</span></td>
         <td style="border-bottom: 1px solid grey"><div id="cfg_lefthand_majeure_current_slider" style="width:180px"></div></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_lefthand_majeure_current_value" value="90" style="width:25px" onchange="servoPosValueChange('cfg_lefthand_majeure_current')"></td>
     </tr>
     <tr id="cfg_lefthand_ringfinger_row">
         <td style="width: 30px"></td>
-        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px">Anular</td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Mínimo</td>
+        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px"><span data-i18n="servos.ringfinger">Anular</span></td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.min">Mínimo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_lefthand_ringfinger_min" value="0" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Máximo</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.max">Máximo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_lefthand_ringfinger_max" value="180" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Actual</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.current">Actual</span></td>
         <td style="border-bottom: 1px solid grey"><div id="cfg_lefthand_ringfinger_current_slider" style="width:180px"></div></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_lefthand_ringfinger_current_value" value="90" style="width:25px" onchange="servoPosValueChange('cfg_lefthand_ringfinger_current')"></td>
     </tr>
     <tr id="cfg_lefthand_pinky_row">
         <td style="width: 30px"></td>
-        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px">Meñique</td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Mínimo</td>
+        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px"><span data-i18n="servos.pinky">Meñique</span></td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.min">Mínimo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_lefthand_pinky_min" value="0" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Máximo</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.max">Máximo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_lefthand_pinky_max" value="180" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Actual</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.current">Actual</span></td>
         <td style="border-bottom: 1px solid grey"><div id="cfg_lefthand_pinky_current_slider" style="width:180px"></div></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_lefthand_pinky_current_value" value="90" style="width:25px" onchange="servoPosValueChange('cfg_lefthand_pinky_current')"></td>
     </tr>
@@ -296,57 +297,57 @@ InMoovBrain Server URL: <input type="text" id="cfg_inmoovbrain_server" value="ht
 <table border=0 cellspacing=0 align=center>
     <tr id="cfg_head_neck_row">
         <td style="border-bottom: 1px solid grey; width: 30px"><input type="checkbox" id="check_head" onclick="clickEnableSliders(this, true)" value="head"></td>
-        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px">Cuello</td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Mínimo</td>
+        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px"><span data-i18n="servos.neck">Cuello</span></td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.min">Mínimo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_head_neck_min" value="0" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Máximo</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.max">Máximo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_head_neck_max" value="180" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Actual</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.current">Actual</span></td>
         <td style="border-bottom: 1px solid grey"><div id="cfg_head_neck_current_slider" style="width:180px"></div></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_head_neck_current_value" value="90" style="width:25px" onchange="servoPosValueChange('cfg_head_neck_current')"></td>
     </tr>
     <tr id="cfg_head_rotate_row">
         <td style="width: 30px"></td>
-        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px">Rotación</td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Mínimo</td>
+        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px"><span data-i18n="servos.rotate">Rotación</span></td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.min">Mínimo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_head_rotate_min" value="0" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Máximo</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.max">Máximo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_head_rotate_max" value="180" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Actual</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.current">Actual</span></td>
         <td style="border-bottom: 1px solid grey"><div id="cfg_head_rotate_current_slider" style="width:180px"></div></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_head_rotate_current_value" value="90" style="width:25px" onchange="servoPosValueChange('cfg_head_rotate_current')"></td>
     </tr>
     <tr id="cfg_head_jaw_row">
         <td style="width: 30px"></td>
-        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px">Mandíbula</td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Mínimo</td>
+        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px"><span data-i18n="servos.jaw">Mandíbula</span></td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.min">Mínimo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_head_jaw_min" value="0" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Máximo</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.max">Máximo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_head_jaw_max" value="180" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Actual</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.current">Actual</span></td>
         <td style="border-bottom: 1px solid grey"><div id="cfg_head_jaw_current_slider" style="width:180px"></div></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_head_jaw_current_value" value="90" style="width:25px" onchange="servoPosValueChange('cfg_head_jaw_current')"></td>
     </tr>
     <tr id="cfg_head_eyex_row">
         <td style="width: 30px"></td>
-        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px">Ojos X</td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Mínimo</td>
+        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px"><span data-i18n="servos.eyex">Ojos X</span></td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.min">Mínimo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_head_eyex_min" value="0" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Máximo</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.max">Máximo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_head_eyex_max" value="180" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Actual</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.current">Actual</span></td>
         <td style="border-bottom: 1px solid grey"><div id="cfg_head_eyex_current_slider" style="width:180px"></div></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_head_eyex_current_value" value="90" style="width:25px" onchange="servoPosValueChange('cfg_head_eyex_current')"></td>
     </tr>
     
     <tr id="cfg_head_eyey_row">
         <td style="width: 30px"></td>
-        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px">Ojos Y</td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Mínimo</td>
+        <td style="border-bottom: 1px solid grey; font-weight: bold; width: 70px"><span data-i18n="servos.eyey">Ojos Y</span></td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.min">Mínimo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_head_eyey_min" value="0" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Máximo</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.max">Máximo</span></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_head_eyey_max" value="180" style="width:25px"></td>
-        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right">Actual</td>
+        <td style="border-bottom: 1px solid grey; width: 50px; text-align: right"><span data-i18n="servos.current">Actual</span></td>
         <td style="border-bottom: 1px solid grey"><div id="cfg_head_eyey_current_slider" style="width:180px"></div></td>
         <td style="border-bottom: 1px solid grey; width: 35px"><input type="text" id="cfg_head_eyey_current_value" value="90" style="width:25px" onchange="servoPosValueChange('cfg_head_eyey_current')"></td>
     </tr>
@@ -357,12 +358,12 @@ InMoovBrain Server URL: <input type="text" id="cfg_inmoovbrain_server" value="ht
 </table>
 
 <br>
-<refresh_servo_sliders_button>actualizar controles servo</refresh_servo_sliders_button>
-<br>
-<rest_button>posición descanso</rest_button>
-<br>
+<refresh_servo_sliders_button>actualizar controles servo</refresh_servo_sliders_button>&nbsp;&nbsp;
+<rest_button>posición descanso</rest_button>&nbsp;&nbsp;
 <clear_console_button>borrar consola</clear_console_button>
 <br>
+<br>
+<div style="text-align:center">InMoovBrain Console. ugo.garcia@gmail.com</div"
 </div>
 </body>
 </html>

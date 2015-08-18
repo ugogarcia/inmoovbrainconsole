@@ -1,0 +1,63 @@
+{
+    "general":
+    {
+        "command": "Comando",
+        "server_url": "URL del servidor InMoovBrain"
+    },
+    
+    "servos":
+    {
+        "leftarm": "brazo izquierdo",
+        "rightarm": "brazo derecho",
+        "head": "cabeza",
+        "min": "mínimo",
+        "max": "máximo",
+        "current": "actual",
+        "omoplate": "omóplato",
+        "shoulder": "hombro",
+        "bicep": "bicep",
+        "rotate": "rotación",
+        "wrist": "muñeca",
+        "thumb": "pulgar",
+        "index": "índice",
+        "majeure": "corazón",
+        "ringfinger": "anular",
+        "pinky": "meñique",
+        "neck": "cuello",
+        "jaw": "mandíbula",
+        "eyex": "ojos X",
+        "eyey": "ojos Y"
+
+    },
+    
+    "buttons":
+    {
+        "refresh_servos": "actualizar estado servos",
+        "rest": "posisión descanso",
+        "clear_console": "borrar consola",
+        "connect_to_server": "¡conectarse al robot!"
+    },
+    
+    "info_mic":
+    {
+        "speak_now" : "¡Habla ahora!",
+        "no_speech" : "No se ha detectado sonido. Revisa la <a href='//support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892'>configuración del micrófono</a>",
+        "no_microphone" : "No se ha detectado micrófono. Revisa la <a href='//support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892'>configuración del micrófono</a>",
+        "allow" : "Haz click en 'Permitir' para habilitar el uso del micrófono",
+        "denied" : "Uso del micrófono denegado",
+        "error" : "Error reconociendo voz. Revisa que tienes conexión a internet y el micrófono habilitado",
+        "blocked" : "Uso del micrófono bloqueado. Para cambiarlo ve a chrome://settings/contentExceptions#media-stream",
+        "upgrade" : "Web Speech API no está soportado por este navegador. Es necesario <a href='//www.google.com/chrome'>Chrome</a> version 25 o superior"
+    },
+    
+    "info_console":
+    {
+        "refreshing_servos": "Actualizando estado de los servos...",
+        "refreshing_servos_ok": "Actualización servos OK",
+        "welcome": "InMoovBrain Console. Versión",
+        "connected": "Conectado al servidor en la URL"
+    }
+        
+
+    
+}

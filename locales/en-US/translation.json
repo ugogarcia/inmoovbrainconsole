@@ -1,0 +1,64 @@
+{
+    "general":
+    {
+        "command": "Command",
+        "server_url": "InMoovBrain Server URL"
+    },
+    
+    "servos":
+    {
+        "leftarm": "left arm",
+        "rightarm": "right arm",
+        "head": "head",
+        "min": "min",
+        "max": "max",
+        "current": "current",
+        "omoplate": "omoplate",
+        "shoulder": "shoulder",
+        "bicep": "bicep",
+        "rotate": "rotate",
+        "wrist": "wrist",
+        "thumb": "thumb",
+        "index": "index",
+        "majeure": "majeure",
+        "ringfinger": "ringfinger",
+        "pinky": "pinky",
+        "neck": "neck",
+        "jaw": "jaw",
+        "eyex": "eyes X",
+        "eyey": "eyes Y"
+
+
+    },
+    
+    "buttons":
+    {
+        "refresh_servos": "refresh servo status",
+        "rest": "rest",
+        "clear_console": "clear console",
+        "connect_to_server": "connect to the robot!"
+    },
+    
+    "info_mic":
+    {
+        "speak_now" : "Speak now!",
+        "no_speech" : "No sound detected. Check configuration at <a href='//support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892'>microphone configuration</a>",
+        "no_microphone" : "No microphone detected. Check <a href='//support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892'>microphone configuration</a>",
+        "allow" : "Click 'Allow' to enable using the microphone",
+        "denied" : "Microphone use denied",
+        "error" : "Error during voice recognition. Check internet connection and microphone",
+        "blocked" : "Microphone blocked. To change this setting go to chrome://settings/contentExceptions#media-stream",
+        "upgrade" : "Web Speech API not supported by this browser. You need <a href='//www.google.com/chrome'>Chrome</a> version 25 and up"
+    },
+    
+    "info_console":
+    {
+        "refreshing_servos": "Refreshing servo status...",
+        "refreshing_servos_ok": "Servo status refreshed OK",
+        "welcome": "InMoovBrain Console. Version",
+        "connected": "Connected to server URL"
+    }
+
+    
+    
+}
