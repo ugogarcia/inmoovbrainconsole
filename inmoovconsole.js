@@ -16,7 +16,7 @@ var movementSliderControl=
     ["cfg_lefthand_thumb_current_slider",0,"myInMoov.leftHand.thumb.moveTo"],
     ["cfg_lefthand_index_current_slider",0,"myInMoov.leftHand.index.moveTo"],
     ["cfg_lefthand_majeure_current_slider",0,"myInMoov.leftHand.majeure.moveTo"],
-    ["cfg_lefthand_ringfinger_current_slider",0,"myInMoov.leftHand.ringFinger.moveTo"],
+    ["cfg_lefthand_ringfinger_current_slider",0,"myInMoov.leftHand.ringfinger.moveTo"],
     ["cfg_lefthand_pinky_current_slider",0,"myInMoov.leftHand.pinky.moveTo"],
     ["cfg_head_neck_current_slider",0,"myInMoov.head.neck.moveTo"],
     ["cfg_head_rotate_current_slider",0,"myInMoov.head.rotate.moveTo"],
@@ -31,7 +31,7 @@ var movementSliderControl=
     ["cfg_righthand_thumb_current_slider",0,"myInMoov.rightHand.thumb.moveTo"],
     ["cfg_righthand_index_current_slider",0,"myInMoov.rightHand.index.moveTo"],
     ["cfg_righthand_majeure_current_slider",0,"myInMoov.rightHand.majeure.moveTo"],
-    ["cfg_righthand_ringfinger_current_slider",0,"myInMoov.rightHand.ringFinger.moveTo"],
+    ["cfg_righthand_ringfinger_current_slider",0,"myInMoov.rightHand.ringfinger.moveTo"],
     ["cfg_righthand_pinky_current_slider",0,"myInMoov.rightHand.pinky.moveTo"]
 ];
 
@@ -51,7 +51,7 @@ function updateServoPos()
             movementSliderControl[n][1]=newVal;
             cmd=movementSliderControl[n][2]+"("+newVal+")";
             //alert(cmd);
-            consoleSendCommand("runpythoncmd", cmd, true, false, null);
+            consoleSendCommand("runpythoncmd", cmd, false, false, null);
         }
     }
 }
@@ -134,7 +134,7 @@ function consoleSendCommand(cmd, pars, writeToConsole, setConsoleFocus, callback
         $("#console_text").append(">> "+pars+"<br>");
         $("#console_text").scrollTop($("#console_text")[0].scrollHeight);
         commandHistory.push(pars);
-        if (commandHistory.length>5) commandHistory.shift();
+        if (commandHistory.length>100) commandHistory.shift();
         commandHistoryIndex=commandHistory.length;
     }
     
@@ -273,9 +273,15 @@ function refreshServoSlidersFromServerCallback2(data)
     {
 //        alert(index+": "+servoStatus[index]);
         if (servoStatus[index]==true)
+        {
             $("#check_"+index).attr("checked", "checked");
+            //alert(index+" a true");
+        }
         else
+        {
             $("#check_"+index).removeAttr("checked", "checked");
+            //alert(index+" a false");
+        }
         clickEnableSliders($("#check_"+index)[0], false);
     }
     $("#console_text").append("<span style='color: blue'>"+i18n.t("info_console.refreshing_servos_ok")+"</span><br>");
