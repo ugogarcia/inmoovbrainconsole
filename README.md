@@ -1,3 +1,8 @@
+<font color="red">¡¡¡Esta aplicación está deprecada!!! La nueva versión de InMoovBrain agrupa en una sóla aplicación el servidor y el interfaz Web. Visita la siguiente URL para acceder a la versión actual:</font> [https://github.com/ugogarcia/inmoovbrain](https://github.com/ugogarcia/inmoovbrain)
+
+<font color="red">¡¡¡This app is deprecated!!! The new release of InMoovBrain is a single app with the server and the web console built in. Check this URL:</font> [https://github.com/ugogarcia/inmoovbrain](https://github.com/ugogarcia/inmoovbrain)
+_________________________________________________
+
 # InMoovBrain Console (Español)
 Interfaz Web para InMoovBrain Server
 
